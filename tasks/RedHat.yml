@@ -1,0 +1,20 @@
+---
+# RedHat family specific tasks for ansible-docker-installation
+- name: Add the Docker GPG key.
+  rpm_key: state=present key=https://yum.dockerproject.org/gpg
+
+- name: Add the Docker Repository.
+  yum_repository:
+      name: Docker-Repository
+      description: Docker Official Latest
+      baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+      enabled: yes
+      gpgkey: https://yum.dockerproject.org/gpg
+      gpgcheck: yes
+      file: docker
+
+- name: Install the docker-engine package.
+  yum: name=docker-engine state=latest update_cache=yes
+
+- name: Include docker specific configuration.
+  include: docker.yml

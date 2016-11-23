@@ -1,0 +1,28 @@
+galaxy_info:
+    author: LSST SQuaRE Team
+    description: Docker Latest Offical Release
+    company: LSST SQuaRE
+    issue_tracker_url: https://github.com/lsst-sqre/ansible-logstash-packages/issues
+    license: MIT
+    min_ansible_version: 2.1
+    platforms:
+    - name: Debian
+      versions:
+        - stretch
+        - jessie
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+    galaxy_tags:
+        - centos
+        - containers
+        - debian
+        - docker
+        - packaging
+        - system
+        - ubuntu
+dependencies: []

@@ -1,0 +1,19 @@
+---
+# tasks file for ansible-docker-installation
+- name: Fetch the kernel version.
+  set_fact:
+    kernel_version: "{{ansible_kernel.split('.')}}"
+
+- name: Verify the system is compatible with docker.
+  fail: msg="Docker requires a 64-bit OS with a Linux kernel 3.10 or higher."
+  when: ("x86_64" != ansible_architecture  or kernel_version[0]|int < 3 and kernel_version[1]|int < 16)
+
+- name: Stop running docker engines.
+  service: name=docker state=stopped
+  ignore_errors: true
+
+# Include operating system family specific configuration:
+# - RedHat
+# - Debian
+- name: Include operating system specific configuration
+  include: "{{ansible_os_family}}.yml"
