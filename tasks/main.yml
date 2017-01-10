@@ -6,7 +6,7 @@
 
 - name: Verify the system is compatible with docker.
   fail: msg="Docker requires a 64-bit OS with a Linux kernel 3.10 or higher."
-  when: ("x86_64" != ansible_architecture  or kernel_version[0]|int < 3 and kernel_version[1]|int < 16)
+  when: ("x86_64" != ansible_architecture  or kernel_version[0]|int < 3 and kernel_version[1]|int < 10)
 
 - name: Stop running docker engines.
   service: name=docker state=stopped
