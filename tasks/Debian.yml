@@ -1,0 +1,23 @@
+---
+# Debian family specific tasks for ansible-docker-installation
+- name: Check if the debian based operating system is supported.
+  fail: msg="Requires at least Ubuntu Trusty or Debian Jessie"
+  when: (item['distribution'] == ansible_distribution and ansible_distribution_major_version|int < item['release'])
+  with_items:
+    - { distribution: Ubuntu, release: 14 }
+    - { distribution: Debian, release: 8 }
+
+- name: Install the apt-transport-https dependency.
+  apt: name=apt-transport-https state=latest update_cache=true install_recommends=no
+
+- name: Add the Docker GPG key.
+  apt_key: state=present keyserver=hkp://p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
+
+- name: Add the Docker Repository.
+  apt_repository: repo="deb https://apt.dockerproject.org/repo {{ansible_distribution|lower}}-{{ansible_distribution_release}} main"
+
+- name: Install the docker-engine package.
+  apt: name=docker-engine state=latest update_cache=yes install_recommends=no
+
+- name: Include docker specific configuration.
+  include: docker.yml

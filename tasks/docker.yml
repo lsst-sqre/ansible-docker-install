@@ -1,0 +1,8 @@
+
+---
+# docker specific tasks for ansible-docker-installation
+- name: Add the docker group.
+  group: name=group state=present
+
+- name: Start docker engine service.
+  service: name=docker state=started enabled=true
